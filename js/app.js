@@ -8,8 +8,12 @@ $(function () {
     const $board = $('.board');
     const array = [];
     const j = 21;
-    const scoreHTML = $('#score span')
+    const scoreHTML = $('.score span');
+    const time = $('.timer span');
+    const moves = $('.moves span');
     let score = 0;
+
+
 
 
     while (array.length < 10) {
@@ -70,27 +74,37 @@ $(function () {
 
     // Check condition for different images and if they are different then hide again
     // Check if they are the same - if same then remove and add 10 points to score
-
+    let movesCount = 1
     let arr1 = [];
     const get1 = $allDivs.on('click', function (e) {
         arr1.push($(this).parent().data('id'));
-        //$(this).css('display', 'none');
-        $(this).fadeOut();
+        $(this).css('display', 'none');
         if(arr1[0] === arr1[1]){
             score += 10;
             setTimeout(function () {
                 $board.find('[data-id="'+arr1[0]+'"]').remove()
                 arr1 = [];
                 scoreHTML.text(score)
-            },500)
+                movesCount += 1
+            },300)
         } else if (arr1.length === 2 && arr1[0] !== arr1[1]) {
             e.preventDefault();
             setTimeout(function () {
                 $('.box').data('data-id', arr1[0]).fadeIn();
                 $('.box').data('data-id', arr1[1]).fadeIn();
                 arr1 = [];
-            },500)
+                movesCount += 1
+            },300)
         }
-    })
+        moves.text(movesCount)
+    });
+
+    // Timer for count time
+
+    let timeCount = 0
+    const timeIntervalID = setInterval(function () {
+        timeCount += 0.01;
+        time.text(timeCount.toFixed(2)+'s')
+    },10)
 
 });
