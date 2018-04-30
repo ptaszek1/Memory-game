@@ -2,6 +2,8 @@
 
 This is a simple game built to test a users memory. There's a deck of cards with different pictures. 
 
+Live: https://ptaszek1.github.io/Memory-game/
+
 <img alt="Logo" src="https://github.com/ptaszek1/Memory-game/blob/master/img/memoryGame.jpg" width="600">
 
 
