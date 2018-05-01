@@ -17,7 +17,7 @@ $(function () {
 
 
     while (array.length < 10) {
-        const number = (Math.floor((Math.random() * j) + 1))
+        const number = (Math.floor((Math.random() * j) + 1));
         const genNumber = array.indexOf(number);
         if (genNumber === -1) {
             array.push(number);
@@ -72,36 +72,40 @@ $(function () {
         'display': 'inline-block'
     });
 
+
     // Check condition for different images and if they are different then hide again
     // Check if they are the same - if same then remove and add 10 points to score
-    let movesCount = 1
+    let movesCount = 1;
     let arr1 = [];
-    const get1 = $allDivs.on('click', function (e) {
+    const get1 = $allDivs.on('click', function clicked() {
         arr1.push($(this).parent().data('id'));
         $(this).css('display', 'none');
         if(arr1[0] === arr1[1]){
+            $allDivs.off("click");
             score += 10;
             setTimeout(function () {
-                $board.find('[data-id="'+arr1[0]+'"]').remove()
+                $board.find('[data-id="'+arr1[0]+'"]').remove();
                 arr1 = [];
-                scoreHTML.text(score)
+                scoreHTML.text(score);
                 movesCount += 1
-            },300)
+                $allDivs.click(clicked);
+            },500)
         } else if (arr1.length === 2 && arr1[0] !== arr1[1]) {
-            e.preventDefault();
+            $allDivs.off("click");
             setTimeout(function () {
                 $('.box').data('data-id', arr1[0]).fadeIn();
                 $('.box').data('data-id', arr1[1]).fadeIn();
                 arr1 = [];
-                movesCount += 1
-            },300)
+                movesCount += 1;
+                $allDivs.click(clicked);
+            },500)
         }
         moves.text(movesCount)
     });
 
     // Timer for count time
 
-    let timeCount = 0
+    let timeCount = 0;
     const timeIntervalID = setInterval(function () {
         timeCount += 0.01;
         time.text(timeCount.toFixed(2)+'s')
