@@ -75,9 +75,10 @@ $(function () {
 
     // Check condition for different images and if they are different then hide again
     // Check if they are the same - if same then remove and add 10 points to score
+    // Also block click event when already clicked 2 times
     let movesCount = 1;
     let arr1 = [];
-    const get1 = $allDivs.on('click', function clicked() {
+    $allDivs.on('click', function clicked() {
         arr1.push($(this).parent().data('id'));
         $(this).css('display', 'none');
         if(arr1[0] === arr1[1]){
@@ -87,7 +88,7 @@ $(function () {
                 $board.find('[data-id="'+arr1[0]+'"]').remove();
                 arr1 = [];
                 scoreHTML.text(score);
-                movesCount += 1
+                movesCount += 1;
                 $allDivs.click(clicked);
             },500)
         } else if (arr1.length === 2 && arr1[0] !== arr1[1]) {
@@ -109,6 +110,27 @@ $(function () {
     const timeIntervalID = setInterval(function () {
         timeCount += 0.01;
         time.text(timeCount.toFixed(2)+'s')
-    },10)
+    },10);
+
+
+    // Show your results when you display all pictures
+
+    setInterval(function () {
+        setTimeout(function () {
+            if(score === 100) {
+                clearInterval(timeIntervalID);
+                $('.scoreP').text(score);
+                $('.timerP').text(timeCount.toFixed(2)+'s');
+                $('.movesP').text(movesCount -1);
+                $('.final-score').removeClass('hide')
+            }
+        },1000)
+    },1000);
+
+    // Start Game Again
+
+    $('.btn').on('click',function (e) {
+        location.reload()
+    })
 
 });
